@@ -7,6 +7,9 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+
 concurrency:
   # automatically cancel the previously triggered workflows when there's a newer version
   group: build-${{ github.event.pull_request.number || github.ref }}
@@ -18,8 +21,9 @@ jobs:
     steps:
     - uses: actions/checkout@v7
     - uses: actions/checkout@v7
-      repository: https://github.com/Project-MONAI/MONAI
-      path: monai
+      with:
+        repository: https://github.com/Project-MONAI/MONAI
+        path: monai
     - name: Set up Python 3.10
       uses: actions/setup-python@v6
       with:
@@ -30,12 +34,14 @@ jobs:
       env:
         PIP_NO_CACHE_DIR: "1"
         PIP_DISABLE_PIP_VERSION_CHECK: "1"
+        BUILD_MONAI: 0
+        PIP_EXTRA_INDEX_URL: "https://download.pytorch.org/whl/cpu"  # forces CPU PyTorch installation, should be faster
       run: |
         find  /opt/hostedtoolcache/* -maxdepth 0 ! -name 'Python' -exec rm -rf {} \;
         df -h
         which python
-        python -m pip install -U pip wheel
-        (cd monai; BUILD_MONAI=0 pip install .[all])
+        python -m pip install -U pip wheel wheel-stub
+        (cd monai; pip install --no-build-isolation .[all])
         python -m pip install -r requirements.txt
         python -m pip list
     - name: Notebook quick check
