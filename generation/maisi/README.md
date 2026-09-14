@@ -1,3 +1,6 @@
+# 🚨🚨🚨 THIS FOLDER IS DEPRECATED (as of Oct 2025) 🚨🚨🚨
+# 👉 Please switch to: [https://github.com/NVIDIA-Medtech/NV-Generate-CTMR/tree/main](https://github.com/NVIDIA-Medtech/NV-Generate-CTMR/tree/main)
+
 # Medical AI for Synthetic Imaging (MAISI)
 This example demonstrates the applications of training and validating NVIDIA MAISI, a 3D Latent Diffusion Model (LDM) capable of generating large CT images accompanied by corresponding segmentation masks. It supports variable volume size and voxel spacing and allows for the precise control of organ/tumor size.
 
@@ -138,7 +141,7 @@ MAISI is based on the following papers:
 [**Rectified Flow:** Liu, Xingchao, Chengyue Gong, and Qiang Liu. "Flow straight and fast: Learning to generate and transfer data with rectified flow." ICLR 2023](https://arxiv.org/pdf/2209.03003).
 
 ### 1. Network Definition
-Network definition is stored in [./configs/config_maisi.json](./configs/config_maisi.json). Training and inference should use the same [./configs/config_maisi.json](./configs/config_maisi.json).
+Network definition is stored in [./configs/config_maisi3d-rflow.json](./configs/config_maisi3d-rflow.json) for the Rectified Flow model and [./configs/config_maisi3d-ddpm.json](./configs/config_maisi3d-ddpm.json) for the DDPM model. Training and inference should use the same [./configs/config_maisi3d-rflow.json](./configs/config_maisi3d-rflow.json) or [./configs/config_maisi3d-ddpm.json](./configs/config_maisi3d-ddpm.json).
 
 ### 2. Model Inference
 #### Inference parameters:
