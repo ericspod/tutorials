@@ -40,8 +40,8 @@ jobs:
         find  /opt/hostedtoolcache/* -maxdepth 0 ! -name 'Python' -exec rm -rf {} \;
         df -h
         which python
-        python -m pip install -U pip wheel wheel-stub
-        (cd monai; pip install --no-build-isolation .[all])
+        python -m pip install -U pip wheel
+        (cd monai; pip install .[all])
         python -m pip install -r requirements.txt
         python -m pip list
     - name: Notebook quick check
