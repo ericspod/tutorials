@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   # automatically cancel the previously triggered workflows when there's a newer version
-  group: build-${{ github.event.pull_request.number || github.ref }}
+  group: pep8-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -32,10 +32,11 @@ jobs:
     - name: Install dependencies
       env:
         PIP_EXTRA_INDEX_URL: "https://download.pytorch.org/whl/cpu"  # forces CPU PyTorch installation, should be faster
+        BUILD_MONAI: 0
       run: |
         find  /opt/hostedtoolcache/* -maxdepth 0 ! -name 'Python' -exec rm -rf {} \;
         python -m pip install --upgrade pip wheel wheel-stub
-        (cd monai; BUILD_MONAI=0 pip install .[all])
+        (cd monai; pip install .[all])
         python -m pip install -r requirements.txt
     - name: PEP8 check
       run: |
