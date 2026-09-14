@@ -16,9 +16,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v7
+    - uses: actions/checkout@v7
+      repository: https://github.com/Project-MONAI/MONAI
+      path: monai
     - name: Set up Python 3.10
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v6
       with:
         python-version: '3.10'
     - name: Install MONAI
@@ -26,17 +29,13 @@ jobs:
       run: |
         which python
         python -m pip install -U pip wheel
-        python -m pip install torch torchvision torchaudio
-
-        python -m pip install -r https://raw.githubusercontent.com/Project-MONAI/MONAI/dev/requirements-dev.txt
+        (cd monai; BUILD_MONAI=0 pip install .[all])
         python -m pip install -r requirements.txt
-
-        BUILD_MONAI=0 python -m pip install git+https://github.com/Project-MONAI/MONAI#egg=MONAI
         python -m pip list
     - name: Notebook quick check
       shell: bash
       run: |
-        python -c "import monai; monai.config.print_debug_info()"
+        python -m monai.config
         git fetch origin main
         git diff --name-only origin/main | while read line
         do
