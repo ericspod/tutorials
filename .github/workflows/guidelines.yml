@@ -22,7 +22,7 @@ jobs:
     - uses: actions/checkout@v7
     - uses: actions/checkout@v7
       with:
-        repository: https://github.com/Project-MONAI/MONAI
+        repository: Project-MONAI/MONAI
         path: monai
     - name: Set up Python 3.10
       uses: actions/setup-python@v6
